@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Container } from './Container';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { ASSETS } from '../../utils/index';
 import { staggerContainer, fadeUp, slideLeft, slideRight, defaultViewport, EASE_SMOOTH } from '../../utils/animations';
 

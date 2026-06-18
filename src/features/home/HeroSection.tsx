@@ -84,8 +84,8 @@ export function HeroSection() {
       </motion.div>
 
       {/* ── Gradient overlays ── */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#030d1a]/95 via-[#0a2a5e]/85 to-[#1288D9]/50" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#030d1a] via-[#030d1a]/20 to-transparent" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#F0F7FF]/90 via-white/80 to-[#E0F2FE]/50" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
 
       {/* ── Aurora orbs ── */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -123,7 +123,7 @@ export function HeroSection() {
               transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="mb-7 w-fit"
             >
-              <span className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/8 px-5 py-2 text-[11px] font-bold text-white/90 backdrop-blur-lg shadow-xl tracking-widest uppercase">
+              <span className="inline-flex items-center gap-2.5 rounded-full border border-[#1288D9]/20 bg-[#1288D9]/5 px-5 py-2 text-[11px] font-bold text-[#1288D9] backdrop-blur-lg shadow-sm tracking-widest uppercase">
                 <Sparkles size={11} className="text-[#38b6ff] animate-pulse" />
                 DM+ Technologies · Innovation digitale
                 <span className="flex h-1.5 w-1.5 rounded-full bg-[#38b6ff] animate-pulse" />
@@ -131,7 +131,7 @@ export function HeroSection() {
             </motion.div>
 
             {/* Headline — character split */}
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-black text-white leading-[1.08] tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-black text-slate-900 leading-[1.08] tracking-tight">
               <SplitText text="Digitaliser pour" delay={0.3} className="block mb-2" />
               <span className="block">
                 <SplitText text="mieux " delay={0.65} />
@@ -153,7 +153,7 @@ export function HeroSection() {
               transition={{ delay: 1.4, duration: 0.5 }}
               className="mt-6 max-w-xl"
             >
-              <p className="text-white/75 leading-relaxed font-medium text-base md:text-lg">
+              <p className="text-slate-600 leading-relaxed font-medium text-base md:text-lg">
                 <WordReveal
                   text="À la pointe de l'innovation, nous développons des solutions logicielles sur mesure et intégrons les dernières avancées en IA pour votre transformation digitale."
                   delay={1.5}
@@ -172,11 +172,11 @@ export function HeroSection() {
               <MagneticButton>
                 <Link to="/contact">
                   <motion.span
-                    className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[#1288D9] shadow-[0_8px_40px_rgba(255,255,255,0.2)] hover:shadow-[0_16px_60px_rgba(255,255,255,0.3)] transition-shadow duration-300 relative overflow-hidden group"
+                    className="inline-flex items-center gap-2.5 rounded-full bg-[#1288D9] px-7 py-3.5 text-sm font-bold text-white shadow-[0_8px_32px_rgba(18,136,217,0.3)] hover:shadow-[0_16px_48px_rgba(18,136,217,0.4)] transition-shadow duration-300 relative overflow-hidden group"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                   >
-                    <span className="absolute inset-0 animate-shimmer opacity-30" />
+                    <span className="absolute inset-0 animate-shimmer opacity-20 bg-white" />
                     <span className="relative">Nous contacter</span>
                     <ArrowRight size={15} className="relative group-hover:translate-x-1 transition-transform" />
                   </motion.span>
@@ -186,7 +186,7 @@ export function HeroSection() {
               <motion.button
                 whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.12)' }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/8 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-colors duration-300"
+                className="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-slate-700 shadow-sm hover:bg-slate-50 transition-colors duration-300"
                 onClick={() => {
                   document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
                 }}
