@@ -6,7 +6,7 @@ import { SplineScene } from "../../components/ui/splite";
 import { Spotlight } from "../../components/ui/spotlight"
 import { Container } from "../../components/ui/Container";
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import technologieImg from "../../assets/Technologie.png";
 import { ParticleField } from '../../components/ui/ParticleField';
 import { MagneticButton } from '../../components/ui/MagneticButton';

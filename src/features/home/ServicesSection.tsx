@@ -1,5 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Container } from '../../components/ui/Container';
 import { ServiceCard } from '../../components/shared/ServiceCard';
 import { SERVICES } from '../../config/constants';
@@ -9,12 +8,9 @@ import { Code2, Cpu, Rocket, Shield, PenTool, Database } from 'lucide-react';
 const icons = [Code2, Cpu, Rocket, Shield, PenTool, Database];
 
 export function ServicesSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   return (
-    <section ref={sectionRef} className="relative bg-white py-32 overflow-hidden">
+    <section className="relative bg-white py-32 overflow-hidden">
 
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent" />
