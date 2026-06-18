@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { Container } from '../../components/ui/Container';
 import { ServiceCard } from '../../components/shared/ServiceCard';
@@ -10,7 +10,7 @@ const icons = [Code2, Cpu, Rocket, Shield, PenTool, Database];
 
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+
 
   return (
     <section ref={sectionRef} className="relative bg-white py-32 overflow-hidden">
