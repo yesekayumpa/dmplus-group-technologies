@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Container } from '../ui/Container';
 import { SITE_CONFIG } from '../../config/constants';
-import { Mail, MapPin, Phone, ArrowLeft, ArrowRight, Globe, Share2, Camera } from 'lucide-react';
+import { Mail, MapPin, Phone, ArrowLeft, ArrowRight, Globe, Share2, Camera, Sparkles } from 'lucide-react';
 import { staggerContainer, fadeUp, defaultViewport } from '../../utils/animations';
 
 export function Footer() {
