@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, CheckCircle2, Clock, Zap, Layers, Filter } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, CheckCircle2, Clock, Zap, Layers } from 'lucide-react';
 import { Container } from '../../components/ui/Container';
 import { TiltCard } from '../../components/ui/TiltCard';
 import { PROJECTS } from '../../config/constants';
@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 
 type Project = typeof PROJECTS[0];
 
-const ALL_CATEGORIES = ['Tous', ...Array.from(new Set(PROJECTS.map((p) => p.category)))];
 
 const statusIcon: Record<string, React.ReactNode> = {
   'Livré': <CheckCircle2 size={11} className="inline-block mr-1" />,
@@ -97,7 +96,6 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState('Tous');
   const containerRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -108,9 +106,6 @@ export function ProjectsSection() {
   const blob1Y = useTransform(scrollYProgress, [0, 1], [150, -150]);
   const blob2Y = useTransform(scrollYProgress, [0, 1], [-150, 150]);
 
-  const all = PROJECTS.filter(
-    (p) => activeCategory === 'Tous' || p.category === activeCategory
-  );
 
   return (
     <section ref={containerRef} className="relative bg-gradient-to-b from-[#F0F7FF] via-white to-[#F8FAFC] py-32 overflow-hidden">
@@ -138,7 +133,7 @@ export function ProjectsSection() {
           viewport={defaultViewport}
         >
           <AnimatePresence mode="popLayout">
-            {all.slice(0, 3).map((project) => (
+            {PROJECTS.slice(0, 3).map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </AnimatePresence>

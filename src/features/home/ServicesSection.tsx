@@ -11,7 +11,6 @@ const icons = [Code2, Cpu, Rocket, Shield, PenTool, Database];
 export function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   return (
     <section ref={sectionRef} className="relative bg-white py-32 overflow-hidden">
