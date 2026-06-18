@@ -107,9 +107,7 @@ export function ProjectsSection() {
   const blob1Y = useTransform(scrollYProgress, [0, 1], [150, -150]);
   const blob2Y = useTransform(scrollYProgress, [0, 1], [-150, 150]);
 
-  const all = PROJECTS.filter(
-    (p) => activeCategory === 'Tous' || p.category === activeCategory
-  );
+  const all = PROJECTS;
 
   return (
     <section ref={containerRef} className="relative bg-gradient-to-b from-[#F0F7FF] via-white to-[#F8FAFC] py-32 overflow-hidden">
