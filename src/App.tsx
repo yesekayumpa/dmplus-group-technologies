@@ -1,19 +1,34 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SmoothScroller } from './components/layout/SmoothScroller';
 import { HomePage } from './features/pages/HomePage';
 import { ContactPage } from './features/pages/ContactPage';
 import { PortfolioPage } from './features/pages/PortfolioPage';
 import { CareersPage } from './features/pages/CareersPage';
+import { RealisationsPage } from './features/pages/RealisationsPage';
+import { ServicesPage } from './features/pages/ServicesPage';
+
+import { PageLoader } from './components/ui/PageLoader';
 
 function App() {
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/careers" element={<CareersPage />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      {!loaded && <PageLoader onComplete={() => setLoaded(true)} />}
+      <SmoothScroller>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/realisations" element={<RealisationsPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+          </Routes>
+        </BrowserRouter>
+      </SmoothScroller>
+    </>
   );
 }
 

@@ -1,91 +1,217 @@
 'use client'
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { SplineScene } from "../../components/ui/splite";
 import { Spotlight } from "../../components/ui/spotlight"
 import { Container } from "../../components/ui/Container";
-import { Button } from "../../components/ui/Button";
+import { Link } from 'react-router-dom';
+import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
 import technologieImg from "../../assets/Technologie.png";
+import { ParticleField } from '../../components/ui/ParticleField';
+import { MagneticButton } from '../../components/ui/MagneticButton';
+
+// Each character animates individually — cinema-grade
+const SplitText = ({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) => {
+  return (
+    <span className={`inline-flex flex-wrap ${className}`} aria-label={text}>
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 40, rotateX: -90, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+          transition={{
+            delay: delay + i * 0.035,
+            duration: 0.65,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{ display: 'inline-block', transformOrigin: 'bottom center', whiteSpace: 'pre' }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+// Word-by-word reveal
+const WordReveal = ({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) => {
+  return (
+    <span className={className} aria-label={text}>
+      {text.split(' ').map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '110%', opacity: 0 }}
+            animate={{ y: '0%', opacity: 1 }}
+            transition={{
+              delay: delay + i * 0.08,
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+};
 
 export function HeroSection() {
-  return (
-    <section className="relative flex w-full items-center min-h-[560px] pt-20 pb-8 overflow-hidden">
-      {/* Background Image & Overlay */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${technologieImg})` }}
-      />
-      <div className="absolute inset-0 z-0 bg-[#1288D9]/80 mix-blend-multiply" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#1288D9] via-[#1288D9]/50 to-transparent" />
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  
+  // Parallax for the background
+  const bgY = useTransform(scrollY, [0, 600], ['0%', '20%']);
+  const contentY = useTransform(scrollY, [0, 400], ['0%', '-8%']);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-      <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20 z-0"
-        fill="white"
-      />
-      
-      <Container className="relative z-10 w-full py-4">
-        <div className="flex flex-col md:flex-row items-center gap-4">
-          {/* Left content */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex-1 py-4 md:py-8 relative z-10 flex flex-col justify-center"
-          >
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm w-fit"
+  return (
+    <section
+      ref={sectionRef}
+      className="relative flex w-full items-center min-h-[85vh] overflow-hidden"
+    >
+      {/* ── Parallax Background ── */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ y: bgY }}
+      >
+        <div
+          className="absolute inset-[-10%] bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${technologieImg})` }}
+        />
+      </motion.div>
+
+      {/* ── Gradient overlays ── */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#030d1a]/95 via-[#0a2a5e]/85 to-[#1288D9]/50" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#030d1a] via-[#030d1a]/20 to-transparent" />
+
+      {/* ── Aurora orbs ── */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="aurora-orb-1 absolute top-[-10%] left-[-5%] w-[700px] h-[700px] rounded-full bg-[#1288D9]/20 blur-[120px]" />
+        <div className="aurora-orb-2 absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-[#38b6ff]/15 blur-[100px]" />
+        <div className="aurora-orb-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#7C3AED]/10 blur-[80px]" />
+      </div>
+
+      {/* ── Particle field ── */}
+      <div className="absolute inset-0 z-1">
+        <ParticleField particleCount={50} color="18, 136, 217" interactive={true} />
+      </div>
+
+
+
+      {/* ── Scanline ── */}
+      <div className="scanline z-1" />
+
+      {/* ── Spotlight ── */}
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20 z-1" fill="white" />
+
+      {/* ── Main content ── */}
+      <Container className="relative z-10 w-full pt-28 pb-16">
+        <motion.div
+          className="flex flex-col md:flex-row items-center gap-10 lg:gap-16"
+          style={{ y: contentY, opacity }}
+        >
+          {/* ── Left text ── */}
+          <div className="flex-[1.2] py-4 md:py-8 flex flex-col justify-center">
+
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-7 w-fit"
             >
-              <span className="flex h-2 w-2 rounded-full bg-white"></span>
-              DM+ Technologies
+              <span className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/8 px-5 py-2 text-[11px] font-bold text-white/90 backdrop-blur-lg shadow-xl tracking-widest uppercase">
+                <Sparkles size={11} className="text-[#38b6ff] animate-pulse" />
+                DM+ Technologies · Innovation digitale
+                <span className="flex h-1.5 w-1.5 rounded-full bg-[#38b6ff] animate-pulse" />
+              </span>
             </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight"
+
+            {/* Headline — character split */}
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-black text-white leading-[1.08] tracking-tight">
+              <SplitText text="Digitaliser pour" delay={0.3} className="block mb-2" />
+              <span className="block">
+                <SplitText text="mieux " delay={0.65} />
+                <span className="relative inline-block">
+                  <SplitText
+                    text="performer."
+                    delay={0.82}
+                    className="text-[#38b6ff]"
+                  />
+
+                </span>
+              </span>
+            </h1>
+
+            {/* Description — word reveal */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.4, duration: 0.5 }}
+              className="mt-6 max-w-xl"
             >
-              Digitaliser pour<br/>mieux performer.
-            </motion.h1>
-            <motion.p 
+              <p className="text-white/75 leading-relaxed font-medium text-base md:text-lg">
+                <WordReveal
+                  text="À la pointe de l'innovation, nous développons des solutions logicielles sur mesure et intégrons les dernières avancées en IA pour votre transformation digitale."
+                  delay={1.5}
+                />
+              </p>
+            </motion.div>
+
+
+            {/* CTAs */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="mt-6 text-white/90 max-w-lg leading-relaxed font-medium"
-            >
-              À la pointe de l'innovation, nous développons des solutions logicielles sur mesure et intégrons les dernières avancées en IA pour votre transformation digitale.
-            </motion.p>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+              transition={{ delay: 1.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 flex flex-wrap items-center gap-4"
             >
-              <Button variant="white" className="font-bold text-[#1288D9] rounded-md px-6 shadow-xl shadow-black/10 hover:scale-105 transition-transform duration-300">
-                Nous contacter
-              </Button>
-              <Button variant="outline-white" className="rounded-md px-6 font-semibold hover:scale-105 transition-all duration-300">
-                Voir nos réalisations
-              </Button>
-            </motion.div>
-          </motion.div>
+              <MagneticButton>
+                <Link to="/contact">
+                  <motion.span
+                    className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-[#1288D9] shadow-[0_8px_40px_rgba(255,255,255,0.2)] hover:shadow-[0_16px_60px_rgba(255,255,255,0.3)] transition-shadow duration-300 relative overflow-hidden group"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span className="absolute inset-0 animate-shimmer opacity-30" />
+                    <span className="relative">Nous contacter</span>
+                    <ArrowRight size={15} className="relative group-hover:translate-x-1 transition-transform" />
+                  </motion.span>
+                </Link>
+              </MagneticButton>
 
-          {/* Right content */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-            className="flex-[1.4] relative h-[440px]"
+              <motion.button
+                whileHover={{ scale: 1.03, backgroundColor: 'rgba(255,255,255,0.12)' }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/8 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-colors duration-300"
+                onClick={() => {
+                  document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Voir nos réalisations
+              </motion.button>
+            </motion.div>
+          </div>
+
+          {/* ── Right 3D scene ── */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, x: 40, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, x: 0, filter: 'blur(0px)' }}
+            transition={{ delay: 0.5, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 relative h-[360px] lg:h-[480px] w-full"
           >
-            <SplineScene 
+            {/* Glow ring behind spline */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#1288D9]/20 to-[#38b6ff]/10 blur-2xl scale-90" />
+            <SplineScene
               scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
+              className="w-full h-full relative z-10"
             />
           </motion.div>
-        </div>
+        </motion.div>
       </Container>
     </section>
-  )
+  );
 }

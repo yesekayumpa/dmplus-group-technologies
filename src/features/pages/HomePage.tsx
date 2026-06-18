@@ -9,11 +9,21 @@ import { JoinUsSection } from '../home/JoinUsSection';
 export function HomePage() {
   return (
     <Layout>
-      <HeroSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <LandingAccordionItem />
-      <TeamSection />
+      <div id="hero">
+        <HeroSection />
+      </div>
+      <div id="services">
+        <ServicesSection />
+      </div>
+      <div id="projects">
+        <ProjectsSection />
+      </div>
+      <div id="ia">
+        <LandingAccordionItem />
+      </div>
+      <div id="team">
+        <TeamSection />
+      </div>
       <JoinUsSection />
     </Layout>
   );
